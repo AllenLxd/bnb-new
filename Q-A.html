@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Question and answer</title>
+<link rel="stylesheet" type="text/css" href="bootstrap.css" />
+<script type="text/javascript" src="bootstrap.min.js"></script>
+<style>
+    ul{
+	   padding-top:40px;
+	   list-style:none;
+	   color:#337ab7;
+	}
+	h2{
+	   text-align:center;
+	   color:#61cc37;
+	}
+</style>
+</head>
+<body>
+<div class="container">
+	<h2>问题列表对应视频回答</h2>
+	<div class="row">
+	    
+	    <ul class="col-xs-12 col-md-3">
+		   <h3>G2G 产品介绍</h3>
+		   <li><a href="#" onClick="playlist(this)" id="Q1">1.G2G是什么？</a></li>
+		   <li><a href="#" onClick="playlist(this)" id="Q2">2.G2G有哪些产品？</a></li>
+           <li><a href="#" onClick="playlist(this)" id="Q3">3.G2G产品应用在什么地方？</a></li>
+		</ul>
+		
+	    <video class="col-xs-12 col-md-9" id="myVideo" type="video/mp4"></video>
+	</div>
+	
+</div>
+ 
+
+<script>
+function playlist(a){
+    var MV = document.getElementById("myVideo");
+    MV.src = a.id+'.mp4';
+    MV.play();
+	MV.controls = true;
+    }
+</script>
+</body>
+</html>
