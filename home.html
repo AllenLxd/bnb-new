@@ -6,8 +6,17 @@
 <link rel="stylesheet" type="text/css" href="bootstrap.css" />
 </head>
 <body> 	
-				<video width="100%"  autoplay>
-				  <source src="home.mp4" type="video/mp4">
+	        <div>
+				<video id="myVideo" width="100%"  autoplay>
+				  <source src="Q1.mp4" type="video/mp4">
 				</video
+			</div>
 </body>
+<script>
+	var myVideo = document.getElementById('myVideo');
+	myVideo.addEventListener("ended", function(){
+             location.href='Q-A.html';
+    });
+	
+</script>
 </html>
