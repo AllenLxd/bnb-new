@@ -4,12 +4,47 @@
 <meta charset="utf-8" />
 <title>Home</title>
 <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+<style>
+    .main{
+    	position:relative;
+    } 
+	.button{
+		position:absolute;
+		z-index:555;
+		top:30px;
+		right:2%;
+	}
+	.video{
+	    float:left;
+		width:100%;
+	}
+	a{
+	   cursor: pointer;
+	   padding: 10px 30px;
+	   transition: all 0.3s ease 0s;
+	   background:#0e83cd;
+       color:#ffffff;
+	   display:block;
+	   height:35px;
+	   width:120px;
+	}
+	a:hover{
+	   background:#2ecc71;
+	   color:#0e83cd;
+	}
+</style>
 </head>
 <body> 	
-	        <div>
-				<video id="myVideo" width="100%"  autoplay>
-				  <source src="Q1.mp4" type="video/mp4">
-				</video
+	          <div class="main">
+			    <div class="video">
+				    <video id="myVideo" width="100%"  autoplay>
+				     <source src="Q1.mp4" type="video/mp4">
+				    </video>
+				</div>
+					
+                <div class="button">
+			       <a class="btn" href="Q-A.html" >Skip</a>
+			    </div>				
 			</div>
 </body>
 <script>
