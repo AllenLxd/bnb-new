@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<style>
+.product{
+	position:relative;
+}
+.btn{
+	position:absolute;
+	z-index:3;
+	right:43%;
+	bottom:5%;
+	display:none;
+}
+.btn{
+	position:absolute;
+	z-index:3;
+	right:43%;
+	bottom:5%;
+	display:none;
+}
+.move1{
+	background:#98bf21;
+	height:60px;
+	width:100px;
+	position:absolute;
+	bottom:0px;
+	right:0px;
+	text-align:center;
+	border-radius:5px;
+}
+</style>
+</head>
+<body> 	
+	  <div class="container">
+	  	    <div style="text-align:center;">
+	  	    	<h2>Lastest Product</h2>
+	  	    </div>
+	        <div class="row">
+		           <div class="col-xs-12 col-sm-4 col-md-4 product ">
+		                 <img class="img-responsive" src="image/item1.jpg">
+		                 <button class="btn btn-default">video</button>
+		           </div>
+		           <div class="col-xs-12 col-sm-4 col-md-4 product">
+		                 <img class="img-responsive" src="image/item2.jpg">
+		                 <button class="btn btn-default">video</button>
+		           </div>
+		           <div class="col-xs-12 col-sm-4 col-md-4 product">
+		                 <img class="img-responsive" src="image/item3.jpg" >
+		                 <button class="btn btn-default">video</button>
+		           </div>
+		           
+	        </div>
+	  </div>  
+	  
+	  <div class="move1">
+	      Hello
+	  </div>
+	  
+</body>
+<script>
+     $(function(){
+     	    //鼠标移入效果
+     	    $('div.product').mouseenter(function(){
+     	    	
+					 $(this).children('button').fadeIn(500);
+			});
+			$('div.product').mouseleave(function(){
+     	    	
+					 $(this).children('button').fadeOut(50);
+			});
+			
+			
+			$("button").click(function(){
+			    var move1=$("div.move1");  
+			    move1.animate({left:'400px'},"slow");
+			    move1.animate({bottom:'140px'},"slow");
+			    move1.animate({width:'550px'},"slow");
+			    move1.animate({height:'400px'},"slow");
+			    move1.animate({fontSize:'4em'},"slow");
+			});
+     	
+     })
+</script>
+</html>
