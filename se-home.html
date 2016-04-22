@@ -24,14 +24,17 @@
 	display:none;
 }
 .move1{
-	background:#98bf21;
-	height:60px;
-	width:100px;
+	display:none;
+	height:40px;
+	width:80px;
 	position:absolute;
 	bottom:0px;
 	right:0px;
 	text-align:center;
-	border-radius:5px;
+	border-radius:10px;
+}
+.closebtn{
+	z-index:111;
 }
 </style>
 </head>
@@ -57,9 +60,15 @@
 	        </div>
 	  </div>  
 	  
-	  <div class="move1">
-	      Hello
-	  </div>
+	  <video class="move1" id="myVideo" src="Q1.mp4" type="video/mp4">
+	  	     <button class="closebtn">close</button>
+	  </video>
+	  <video class="move1" id="myVideo" src="Q2.mp4" type="video/mp4">
+	  	     <button class="closebtn">close</button>
+	  </video>
+	  <video class="move1" id="myVideo" src="Q3.mp4" type="video/mp4">
+	         <button class="closebtn">close</button>
+	  </video>
 	  
 </body>
 <script>
@@ -74,17 +83,38 @@
 					 $(this).children('button').fadeOut(50);
 			});
 			
+			var btn=$("button.btn");
+			var move1=$("video.move1"); 
+			btn.each(function(index){
+				var moveIndex = index;
+				$(this).click(function(){
+					    $(move1[moveIndex]).show().animate({
+						        right:'400px',
+						        top:'40px',
+						        width:'650px',
+						        height:'400px'
+						}, 1700,function(){
+							 $(move1[moveIndex]).attr({
+							 	'controls':'controls',
+							 	'autoplay':'ture'
+							 });
+							
+						});
+				});
+			})
 			
-			$("button").click(function(){
-			    var move1=$("div.move1");  
-			    move1.animate({
-				        right:'400px',
-				        bottom:'140px',
-				        width:'550px',
-				        height:'400px',
-				        fontSize:'4em'
-				}, 1700);
-			});
+			move1.each(function(index){
+				$(this).addEventListener("ended", function(){
+			             $(this).animate({
+			             	    width:'80px',
+						        height:'40px',
+						        right:'-400px',
+						        top:'-40px'
+						        
+						}, 1700).hide();
+			    });
+			})
+			
      	
      })
 </script>
