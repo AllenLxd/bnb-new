@@ -23,19 +23,16 @@
 	bottom:5%;
 	display:none;
 }
-.move1{
+.movie{
 	display:none;
-	height:40px;
-	width:80px;
+	height:10px;
+	width:20px;
 	position:absolute;
-	bottom:0px;
+	top:0px;
 	right:0px;
-	text-align:center;
-	border-radius:10px;
+	
 }
-.closebtn{
-	z-index:111;
-}
+
 </style>
 </head>
 <body> 	
@@ -60,18 +57,16 @@
 	        </div>
 	  </div>  
 	  
-	  <video class="move1" id="myVideo" src="Q1.mp4" type="video/mp4">
-	  	     <button class="closebtn">close</button>
+	  <video class="movie" id="myVideo" src="Q1.mp4" type="video/mp4">    
 	  </video>
-	  <video class="move1" id="myVideo" src="Q2.mp4" type="video/mp4">
-	  	     <button class="closebtn">close</button>
+	  <video class="movie" id="myVideo" src="Q2.mp4" type="video/mp4">     
 	  </video>
-	  <video class="move1" id="myVideo" src="Q3.mp4" type="video/mp4">
-	         <button class="closebtn">close</button>
+	  <video class="movie" id="myVideo" src="Q3.mp4" type="video/mp4">         
 	  </video>
 	  
 </body>
 <script>
+
      $(function(){
      	    //鼠标移入效果
      	    $('div.product').mouseenter(function(){
@@ -84,38 +79,47 @@
 			});
 			
 			var btn=$("button.btn");
-			var move1=$("video.move1"); 
+			var movie=$("video.movie"); 
+			//视频播放完毕自动隐藏
+			movie.each(function(vindex){
+					    	$(movie[vindex]).bind('ended',function(){
+					    		 $(this).animate({
+									        right:'0px',
+									        top:'0px',
+									        width:'20px',
+									        height:'10px',									   
+										}, 1000).hide(1000);
+									
+							});
+					    		
+			});
+					    
 			btn.each(function(index){
 				var moveIndex = index;
 				$(this).click(function(){
-					    $(move1[moveIndex]).show().animate({
+					    movie.each(function(vindex){
+					    	$(movie[vindex]).animate({
+						        right:'0px',
+						        top:'0px',
+						        width:'20px',
+						        height:'10px'
+							}, 10).hide();
+						
+					    });
+					    
+					    $(movie[moveIndex]).show().animate({
 						        right:'400px',
-						        top:'40px',
+						        top:'80px',
 						        width:'650px',
 						        height:'400px'
 						}, 1700,function(){
-							 $(move1[moveIndex]).attr({
+							 $(movie[moveIndex]).attr({
 							 	'controls':'controls',
-							 	'autoplay':'ture'
 							 });
-							
 						});
 				});
 			})
-			
-			move1.each(function(index){
-				$(this).addEventListener("ended", function(){
-			             $(this).animate({
-			             	    width:'80px',
-						        height:'40px',
-						        right:'-400px',
-						        top:'-40px'
-						        
-						}, 1700).hide();
-			    });
-			})
-			
-     	
+			    	
      })
 </script>
 </html>

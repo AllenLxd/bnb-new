@@ -5,6 +5,7 @@
 <title>Question and answer</title>
 <link rel="stylesheet" type="text/css" href="/bootstrap.css" />
 <script type="text/javascript" src="bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
 <style>
     ul{
 	   padding-top:40px;
@@ -15,33 +16,80 @@
 	   text-align:center;
 	   color:#61cc37;
 	}
+	.movie{
+	display:none;
+	height:10px;
+	width:20px;
+	position:absolute;
+	top:0px;
+	right:0px;
+	text-align:center;
+}
 </style>
 </head>
 <body>
-<div class="container">
 	<h2>问题列表对应视频回答</h2>
-	<div class="row">
+
 	    
-	    <ul class="col-xs-3 col-md-3">
+	    <ul class="">
 		   <li>G2G 产品介绍</li>
-		   <li><a href="#" onClick="playlist(this)" id="Q1">1.G2G是什么？</a></li>
-		   <li><a href="#" onClick="playlist(this)" id="Q2">2.G2G有哪些产品？</a></li>
-           <li><a href="#" onClick="playlist(this)" id="Q3">3.G2G产品应用在什么地方？</a></li>
+		   <li><a class="btn" href="#" id="Q1">1.G2G是什么？</a></li>
+		   <li><a class="btn" href="#" id="Q2">2.G2G有哪些产品？</a></li>
+           <li><a class="btn" href="#" id="Q3">3.G2G产品应用在什么地方？</a></li>
 		</ul>
-		
-	    <video class="col-xs-8 col-md-8" id="myVideo" type="video/mp4"></video>
-	</div>
+
 	
-</div>
- 
+	  <video class="movie" id="myVideo" src="Q1.mp4" type="video/mp4" controls="">    
+	  </video>
+	  <video class="movie" id="myVideo" src="Q2.mp4" type="video/mp4" controls="">      
+	  </video>
+	  <video class="movie" id="myVideo" src="Q3.mp4" type="video/mp4" controls="">         
+	  </video>
+	
 
 <script>
-function playlist(a){
-    var MV = document.getElementById("myVideo");
-    MV.src = a.id+'.mp4';
-    MV.play();
-	MV.controls = true;
-    }
+ $(function(){
+     	   
+			
+			var btn=$("a.btn");
+			var movie=$("video.movie"); 
+			//视频播放完毕自动隐藏
+			movie.each(function(vindex){
+					    	$(movie[vindex]).bind('ended',function(){
+					    		 $(this).animate({
+									        right:'0px',
+									        top:'0px',
+									        width:'20px',
+									        height:'10px'
+										}, 1000).hide(500);
+									
+							});
+					    		
+			});
+					    
+			btn.each(function(index){
+				var moveIndex = index;
+				$(this).click(function(){
+					    movie.each(function(vindex){
+					    	$(movie[vindex]).animate({
+						        right:'0px',
+						        top:'0px',
+						        width:'20px',
+						        height:'10px'
+							}, 10).hide();
+						
+					    });
+					    
+					    $(movie[moveIndex]).show().animate({
+						        right:'350px',
+						        top:'60px',
+						        width:'650px',
+						        height:'400px'
+						}, 1700);
+				});
+			})
+			    	
+     })
 </script>
 </body>
 </html>
