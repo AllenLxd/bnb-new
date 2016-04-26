@@ -30,6 +30,8 @@
 	position:absolute;
 	top:0px;
 	right:0px;
+	border:1px solid #222222;
+	border-radius:10px;
 	
 }
 
@@ -110,11 +112,11 @@
 					    $(movie[moveIndex]).show().animate({
 						        right:'400px',
 						        top:'80px',
-						        width:'650px',
-						        height:'400px'
+						        width:'615px',
+						        height:'350px'
 						}, 1700,function(){
 							 $(movie[moveIndex]).attr({
-							 	'controls':'controls',
+							 	'controls':'controls'
 							 });
 						});
 				});

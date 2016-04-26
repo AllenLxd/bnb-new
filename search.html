@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Keyword Search Function</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<style>
+	.movie{
+		display:none;
+		height:10px;
+		width:20px;
+		position:absolute;
+		top:0px;
+		right:0px;
+		border:1px solid #222222;
+		border-radius:10px;	
+	}
+	
+</style>
+</head>
+<body> 	
+	<div class="container">
+		<h2>关键字查询功能</h2>
+			<div class="row">
+			  <div class="col-lg-6">
+			    <div class="input-group">
+			      <input id="searchText" type="text" class="form-control" placeholder="Search for...">
+			      <span class="input-group-btn">
+			        <button id="search" class="btn btn-default" type="button">Go!</button>
+			      </span>
+			    </div><!-- /input-group -->
+			  </div><!-- /.col-lg-6 -->
+		  </div><!-- /.row -->
+		  <h3></h3>
+	</div> 
+	
+	  <video class="movie" id="myVideo" src="" type="video/mp4" controls autoplay>    
+	  </video>
+	        
+	  
+</body>
+<script>
+   var keywords = [
+                   'trident','trident sf','trident df','G2G trident',
+                   'array','array SF','array DF','G2G array',
+                   'side','G2G side'
+                  ]
+   var videoSrc = ['Q1.mp4','Q2.mp4','Q3.mp4'];
+   
+   $('video.movie').bind('ended',function(){
+					    		 $(this).animate({
+									        right:'0px',
+									        top:'0px',
+									        width:'20px',
+									        height:'10px',									   
+										}, 1000).hide(1000);
+									
+							});
+   
+	 $('#search').click(function(){
+	 	    
+	 	     var inputcontent = $('#searchText').val();
+             var searchResult = $.inArray(inputcontent,keywords);
+             var srcIndex = 0;
+             $('h3').html('');
+             $('video.movie').animate({
+						        right:'0px',
+						        top:'0px',
+						        width:'20px',
+						        height:'10px'
+							}, 10).hide();
+							
+             if(searchResult == -1){
+             	
+             	    $('h3').html('can not search what you want ! please contact us');
+             	    
+             }else if(searchResult<=3){
+             	      srcIndex = 0;
+             	      $('video.movie').attr({'src':videoSrc[srcIndex]}).show().animate({
+												        right:'400px',
+												        top:'200px',
+												        width:'615px',
+												        height:'350px'
+												}, 1700);
+             	  
+             }else if(searchResult<=7){
+             	      srcIndex = 1;
+             	      $('video.movie').attr({'src':videoSrc[srcIndex]}).show().animate({
+												        right:'400px',
+												        top:'200px',
+												        width:'620px',
+												        height:'350px'
+												}, 1700);
+             	  
+             }else{
+             	      srcIndex = 2;
+             	      $('video.movie').attr({'src':videoSrc[srcIndex]}).show().animate({
+												        right:'400px',
+												        top:'200px',
+												        width:'620px',
+												        height:'350px'
+												}, 1700);
+             }
+             
+	 });
+	
+</script>
+</html>
