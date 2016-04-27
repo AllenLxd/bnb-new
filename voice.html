@@ -2,36 +2,138 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>second Homepage</title>
+<title>Voice System</title>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 <script type="text/javascript" src="js/annyang.js"></script>
-
+<script type="text/javascript" src="js/jquery.js"></script>
 <style>
-  div{
-  	 width:200px;
-  	 height:100px;
-  	 background:pink;
-  	 position:absolute;
-  	 left:300px;
-  	 top:200px;
-  }
+    .section_title{
+	   			padding:15px 0;
+	   }
+	   
+	   h1,h4{
+	   			text-align:center;
+	   }
+	   
+	   .section_tips{
+			   	font-size: 20px;
+			    line-height: 30px;
+			    font-weight: 400;
+			   	background-color:#1abc96;
+			   	padding:3% 10%;
+			   	color:#fff;
+	   }
+	   .voice_trident{
+	   	    text-indent:25px;
+	   	    background:url('image/mini_icon_say.png') no-repeat 0 6px;
+	   }
+	   .movie{
+					display:none;
+					height:10px;
+					width:20px;
+					position:absolute;
+					top:0px;
+					right:0px;
+					border:1px solid #222222;
+					border-radius:10px;	
+			}
 </style>
+<script>
+          $('video.movie').bind('ended',function(){
+					    		 $(this).animate({
+									        right:'0px',
+									        top:'0px',
+									        width:'20px',
+									        height:'10px',									   
+										}, 1000).hide(1000);
+			});
+		  // first we make sure annyang started succesfully
+		  if (annyang) {
+		  	
+		    
+		    // define the functions our commands will run.
+		    
+
+							
+							
+		   var showVideo = function(num){
+		    	
+		       $('video.movie').animate({
+						        right:'0px',
+						        top:'0px',
+						        width:'20px',
+						        height:'10px'
+					 }, 10).hide();
+					 
+					 $('video.movie').show().animate({
+												        right:'400px',
+												        top:'200px',
+												        width:'615px',
+												        height:'350px'
+												}, 1700);
+					
+					  
+		    }
+		    
+		
+		    // define our commands.
+		    // * The key is the phrase you want your users to say.
+		    // * The value is the action to do.
+		    //   You can pass a function, a function name (as a string), or write your function as part of the commands object.
+		    var commands = {
+		      'G2G trident':  function(){
+			    	
+			       $('video.movie').animate({
+							        right:'0px',
+							        top:'0px',
+							        width:'20px',
+							        height:'10px'
+					}, 10).hide();
+						 
+				    $('video.movie').show().animate({
+							        right:'400px',
+							        top:'200px',
+							        width:'615px',
+							        height:'350px'		
+                                   }, 1700);
+						
+						  } 
+		        
+		    };
+		
+		    // OPTIONAL: activate debug mode for detailed logging in the console
+		    annyang.debug();
+		
+		    // Add voice commands to respond to
+		    annyang.addCommands(commands);
+		
+		    // OPTIONAL: Set a language for speech recognition (defaults to English)
+		    // For a full list of language codes, see the documentation:
+		    // https://github.com/TalAter/annyang/blob/master/docs/README.md#languages
+		    annyang.setLanguage('en');
+		
+		    // Start listening. You can call this here, or attach this call to an event, button, etc.
+		    annyang.start();
+		    
+		  } else {
+		    $(document).ready(function() {
+		      console.log('can not support')
+		    });
+		  }
+</script>
 </head>
 <body> 	
-	
-	  
+	<section class="section_title">
+				    <h1>Welcome to Bnboxes</h1>
+			      <h4>--Find what you need with your voice</h4>
+	</section>
+	<section class="section_tips">
+			       <p class="voice_trident">Say "G2G Trident" to watch the Trident video</p>
+	</section>
+	<video class="movie" id="myVideo" src="" type="video/mp4" controls autoplay>    
+	</video>
+		
+
 </body>
-<script>
-	if (annyang) {
-	  var commands = {
-	    'say hello to my friend': function() {
-	      console.log(1);
-	    }
-	  };
-	
-	  annyang.addCommands(commands);
-	  annyang.start();
-	}
-    
-</script>
+
 </html>

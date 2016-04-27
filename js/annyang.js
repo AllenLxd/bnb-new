@@ -1,10 +1,20 @@
 //! annyang
-//! version : 2.2.1
+//! version : 2.4.0
 //! author  : Tal Ater @TalAter
 //! license : MIT
 //! https://www.TalAter.com/annyang/
-
-(function (undefined) {
+(function (root, factory) {
+  "use strict";
+  if (typeof define === 'function' && define.amd) { // AMD + global
+    define([], function () {
+      return (root.annyang = factory(root));
+    });
+  } else if (typeof module === 'object' && module.exports) { // CommonJS
+    module.exports = factory(root);
+  } else { // Browser globals
+    root.annyang = factory(root);
+  }
+}(typeof window !== 'undefined' ? window : this, function (root, undefined) {
   "use strict";
 
   /**
@@ -17,8 +27,7 @@
    * # API Reference
    */
 
-  // Save a reference to the global object (window in the browser)
-  var root = this;
+  var annyang;
 
   // Get the SpeechRecognition object, while handling browser prefixes
   var SpeechRecognition = root.SpeechRecognition ||
@@ -30,8 +39,7 @@
   // Check browser support
   // This is done as early as possible, to make it as fast as possible for unsupported browsers
   if (!SpeechRecognition) {
-    root.annyang = null;
-    return undefined;
+    return null;
   }
 
   var commandsList = [];
@@ -75,18 +83,51 @@
 
   var initIfNeeded = function() {
     if (!isInitialized()) {
-      root.annyang.init({}, false);
+      annyang.init({}, false);
     }
   };
 
   var registerCommand = function(command, cb, phrase) {
     commandsList.push({ command: command, callback: cb, originalPhrase: phrase });
     if (debugState) {
-      root.console.log('Command successfully loaded: %c'+phrase, debugStyle);
+      console.log('Command successfully loaded: %c'+phrase, debugStyle);
     }
   };
 
-  root.annyang = {
+  var parseResults = function(results) {
+    invokeCallbacks(callbacks.result, results);
+    var commandText;
+    // go over each of the 5 results and alternative results received (we've set maxAlternatives to 5 above)
+    for (var i = 0; i<results.length; i++) {
+      // the text recognized
+      commandText = results[i].trim();
+      if (debugState) {
+        console.log('Speech recognized: %c'+commandText, debugStyle);
+      }
+
+      // try and match recognized text to one of the commands on the list
+      for (var j = 0, l = commandsList.length; j < l; j++) {
+        var currentCommand = commandsList[j];
+        var result = currentCommand.command.exec(commandText);
+        if (result) {
+          var parameters = result.slice(1);
+          if (debugState) {
+            console.log('command matched: %c'+currentCommand.originalPhrase, debugStyle);
+            if (parameters.length) {
+              console.log('with parameters', parameters);
+            }
+          }
+          // execute the matched command
+          currentCommand.callback.apply(this, parameters);
+          invokeCallbacks(callbacks.resultMatch, commandText, currentCommand.originalPhrase, results);
+          return;
+        }
+      }
+    }
+    invokeCallbacks(callbacks.resultNoMatch, results);
+  };
+
+  annyang = {
 
     /**
      * Initialize annyang with a list of commands to recognize.
@@ -104,7 +145,7 @@
      * As of v1.1.0 it is no longer required to call init(). Just start() listening whenever you want, and addCommands() whenever, and as often as you like.
      *
      * @param {Object} commands - Commands that annyang should listen to
-     * @param {Boolean} [resetCommands=true] - Remove all commands before initializing?
+     * @param {boolean} [resetCommands=true] - Remove all commands before initializing?
      * @method init
      * @deprecated
      * @see [Commands Object](#commands-object)
@@ -169,9 +210,9 @@
           // play nicely with the browser, and never restart annyang automatically more than once per second
           var timeSinceLastStart = new Date().getTime()-lastStartedAt;
           if (timeSinceLastStart < 1000) {
-            setTimeout(root.annyang.start, 1000-timeSinceLastStart);
+            setTimeout(annyang.start, 1000-timeSinceLastStart);
           } else {
-            root.annyang.start();
+            annyang.start();
           }
         }
       };
@@ -179,7 +220,7 @@
       recognition.onresult  = function(event) {
         if(pauseListening) {
           if (debugState) {
-            root.console.log('Speech heard, but annyang is paused');
+            console.log('Speech heard, but annyang is paused');
           }
           return false;
         }
@@ -191,37 +232,7 @@
           results[k] = SpeechRecognitionResult[k].transcript;
         }
 
-        invokeCallbacks(callbacks.result, results);
-        var commandText;
-        // go over each of the 5 results and alternative results received (we've set maxAlternatives to 5 above)
-        for (var i = 0; i<results.length; i++) {
-          // the text recognized
-          commandText = results[i].trim();
-          if (debugState) {
-            root.console.log('Speech recognized: %c'+commandText, debugStyle);
-          }
-
-          // try and match recognized text to one of the commands on the list
-          for (var j = 0, l = commandsList.length; j < l; j++) {
-            var currentCommand = commandsList[j];
-            var result = currentCommand.command.exec(commandText);
-            if (result) {
-              var parameters = result.slice(1);
-              if (debugState) {
-                root.console.log('command matched: %c'+currentCommand.originalPhrase, debugStyle);
-                if (parameters.length) {
-                  root.console.log('with parameters', parameters);
-                }
-              }
-              // execute the matched command
-              currentCommand.callback.apply(this, parameters);
-              invokeCallbacks(callbacks.resultMatch, commandText, currentCommand.originalPhrase, results);
-              return true;
-            }
-          }
-        }
-        invokeCallbacks(callbacks.resultNoMatch, results);
-        return false;
+        parseResults(results);
       };
 
       // build commands list
@@ -238,8 +249,9 @@
      * It's a good idea to call this after adding some commands first, but not mandatory.
      *
      * Receives an optional options object which supports the following options:
-     * - `autoRestart` (Boolean, default: true) Should annyang restart itself if it is closed indirectly, because of silence or window conflicts?
-     * - `continuous`  (Boolean, default: undefined) Allow forcing continuous mode on or off. Annyang is pretty smart about this, so only set this if you know what you're doing.
+     *
+     * - `autoRestart` (boolean, default: true) Should annyang restart itself if it is closed indirectly, because of silence or window conflicts?
+     * - `continuous`  (boolean, default: undefined) Allow forcing continuous mode on or off. Annyang is pretty smart about this, so only set this if you know what you're doing.
      *
      * #### Examples:
      * ````javascript
@@ -269,7 +281,7 @@
         recognition.start();
       } catch(e) {
         if (debugState) {
-          root.console.log(e.message);
+          console.log(e.message);
         }
       }
     },
@@ -284,7 +296,7 @@
      */
     abort: function() {
       autoRestart = false;
-      if (isInitialized) {
+      if (isInitialized()) {
         recognition.abort();
       }
     },
@@ -308,13 +320,13 @@
      * @method resume
      */
     resume: function() {
-      root.annyang.start();
+      annyang.start();
     },
 
     /**
      * Turn on output of debug messages to the console. Ugly, but super-handy!
      *
-     * @param {Boolean} [newState=true] - Turn on/off debug messages
+     * @param {boolean} [newState=true] - Turn on/off debug messages
      * @method debug
      */
     debug: function(newState) {
@@ -370,7 +382,7 @@
             registerCommand(new RegExp(cb.regexp.source, 'i'), cb.callback, phrase);
           } else {
             if (debugState) {
-              root.console.log('Can not register command: %c'+phrase, debugStyle);
+              console.log('Can not register command: %c'+phrase, debugStyle);
             }
             continue;
           }
@@ -437,11 +449,11 @@
      *
      * #### Examples:
      * ````javascript
-     * annyang.addCallback('error', function () {
+     * annyang.addCallback('error', function() {
      *   $('.myErrorText').text('There was an error!');
      * });
      *
-     * annyang.addCallback('resultMatch', function (userSaid, commandText, phrases) {
+     * annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
      *   console.log(userSaid); // sample output: 'hello'
      *   console.log(commandText); // sample output: 'hello (there)'
      *   console.log(phrases); // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
@@ -540,10 +552,50 @@
      */
     getSpeechRecognizer: function() {
       return recognition;
+    },
+
+    /**
+     * Simulate speech being recognized. This will trigger the same events and behavior as when the Speech Recognition
+     * detects speech.
+     *
+     * Can accept either a string containing a single sentence, or an array containing multiple sentences to be checked
+     * in order until one of them matches a command (similar to the way Speech Recognition Alternatives are parsed)
+     *
+     * #### Examples:
+     * ````javascript
+     * annyang.trigger('Time for some thrilling heroics');
+     * annyang.trigger(
+     *     ['Time for some thrilling heroics', 'Time for some thrilling aerobics']
+     *   );
+     * ````
+     *
+     * @param string|array sentences A sentence as a string or an array of strings of possible sentences
+     * @returns undefined
+     * @method trigger
+     */
+    trigger: function(sentences) {
+      if(!annyang.isListening()) {
+        if (debugState) {
+          if (!isListening) {
+            console.log('Cannot trigger while annyang is aborted');
+          } else {
+            console.log('Speech heard, but annyang is paused');
+          }
+        }
+        return;
+      }
+
+      if (!Array.isArray(sentences)) {
+        sentences = [sentences];
+      }
+
+      parseResults(sentences);
     }
   };
 
-}).call(this);
+  return annyang;
+
+}));
 
 /**
  * # Good to Know
