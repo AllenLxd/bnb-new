@@ -38,6 +38,26 @@
 					border-radius:10px;	
 			}
 </style>
+
+</head>
+<body> 	
+	<section class="section_title">
+				    <h1>Welcome to Bnboxes</h1>
+			      <h4>--Find what you need with your voice</h4>
+	</section>
+	<section class="section_tips">
+			       <p class="voice_trident">Say "G2G Trident" to watch the Trident video</p>
+			       <p class="voice_trident">Say "G2G Trident" to watch the Trident video</p>
+			       <p class="voice_trident">Say "G2G Trident" to watch the Trident video</p>
+	</section>
+	
+	<video class="movie" id="myVideo" src="" type="video/mp4" controls>    
+	</video>
+
+		
+
+</body>
+
 <script>
           $('video.movie').bind('ended',function(){
 					    		 $(this).animate({
@@ -47,6 +67,8 @@
 									        height:'10px',									   
 										}, 1000).hide(1000);
 			});
+			
+		   //var videoSrc = ['Q1.mp4','Q2.mp4','Q3.mp4'];
 		  // first we make sure annyang started succesfully
 		  if (annyang) {
 		  	
@@ -56,24 +78,25 @@
 
 							
 							
-		   var showVideo = function(num){
+		  var showVideo = function(num){
+		   	
+		   	        console.log(num);
 		    	
-		       $('video.movie').animate({
+		            /* $('video.movie').animate({
 						        right:'0px',
 						        top:'0px',
 						        width:'20px',
 						        height:'10px'
 					 }, 10).hide();
 					 
-					 $('video.movie').show().animate({
+					 $('video.movie').attr({'src':videoSrc[num]}).show().animate({
 												        right:'400px',
 												        top:'200px',
 												        width:'615px',
 												        height:'350px'
-												}, 1700);
-					
+												}, 1700);*/
 					  
-		    }
+		 }
 		    
 		
 		    // define our commands.
@@ -81,23 +104,11 @@
 		    // * The value is the action to do.
 		    //   You can pass a function, a function name (as a string), or write your function as part of the commands object.
 		    var commands = {
-		      'G2G trident':  function(){
-			    	
-			       $('video.movie').animate({
-							        right:'0px',
-							        top:'0px',
-							        width:'20px',
-							        height:'10px'
-					}, 10).hide();
-						 
-				    $('video.movie').show().animate({
-							        right:'400px',
-							        top:'200px',
-							        width:'615px',
-							        height:'350px'		
-                                   }, 1700);
-						
-						  } 
+		    	
+		      'A':  function(){console.log(0)},
+		      'B':  function(){showVideo(1)},
+			  'C':  function(){showVideo(2)} 	
+			            
 		        
 		    };
 		
@@ -121,19 +132,4 @@
 		    });
 		  }
 </script>
-</head>
-<body> 	
-	<section class="section_title">
-				    <h1>Welcome to Bnboxes</h1>
-			      <h4>--Find what you need with your voice</h4>
-	</section>
-	<section class="section_tips">
-			       <p class="voice_trident">Say "G2G Trident" to watch the Trident video</p>
-	</section>
-	<video class="movie" id="myVideo" src="" type="video/mp4" controls autoplay>    
-	</video>
-		
-
-</body>
-
 </html>
