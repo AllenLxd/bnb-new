@@ -46,9 +46,9 @@
 			      <h4>--Find what you need with your voice</h4>
 	</section>
 	<section class="section_tips">
-			       <p class="voice_trident">Say "G2G Trident" to watch the Trident video</p>
-			       <p class="voice_trident">Say "G2G Trident" to watch the Trident video</p>
-			       <p class="voice_trident">Say "G2G Trident" to watch the Trident video</p>
+			       <p class="voice_trident">Say "Trident" to watch the Trident video</p>
+			       <p class="voice_trident">Say "Array" to watch the Trident video</p>
+			       <p class="voice_trident">Say "side" to watch the Trident video</p>
 	</section>
 	
 	<video class="movie" id="myVideo" src="" type="video/mp4" controls>    
@@ -68,7 +68,7 @@
 										}, 1000).hide(1000);
 			});
 			
-		   //var videoSrc = ['Q1.mp4','Q2.mp4','Q3.mp4'];
+		   var videoSrc = ['Q1.mp4','Q2.mp4','Q3.mp4'];
 		  // first we make sure annyang started succesfully
 		  if (annyang) {
 		  	
@@ -80,9 +80,8 @@
 							
 		  var showVideo = function(num){
 		   	
-		   	        console.log(num);
 		    	
-		            /* $('video.movie').animate({
+		           $('video.movie').animate({
 						        right:'0px',
 						        top:'0px',
 						        width:'20px',
@@ -105,7 +104,7 @@
 		    //   You can pass a function, a function name (as a string), or write your function as part of the commands object.
 		    var commands = {
 		    	
-		      'A':  function(){console.log(0)},
+		      'A':  function(){showVideo(0)},
 		      'B':  function(){showVideo(1)},
 			  'C':  function(){showVideo(2)} 	
 			            
