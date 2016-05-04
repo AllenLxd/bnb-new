@@ -110,7 +110,9 @@ $(function(){
 		    	
 		      'trident':  function(){showVideo(0)},
 		      'array':  function(){showVideo(1)},
-			  'side':  function(){showVideo(2)} 	
+			  'side':  function(){showVideo(2)}
+			  'wow':  function(){showVideo(3)},
+			  'anpro':  function(){showVideo(4)} 
 			            
 		        
 		    };
