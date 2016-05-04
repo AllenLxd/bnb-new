@@ -15,7 +15,6 @@ h2{
 	top:0px;
 	right:0px;
 	text-align:center;
-	border:1px solid #222222;
 	border-radius:10px;
 }
 .section-content{
@@ -31,7 +30,7 @@ h2{
 	   }
 .voice_trident{
 	   	    text-indent:25px;
-	   	    background:url('image/mini_icon_say.png') no-repeat 0 6px;
+	   	    background:url('../image/mini_icon_say.png') no-repeat 0 6px;
 	   }
 	   
 .form-center{
