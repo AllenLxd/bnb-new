@@ -39,8 +39,7 @@ $(function(){
 				 $('#search').click(function(){
 				 	    
 				 	     var inputcontent = $('#searchText').val();
-			             var searchResult = $.inArray(inputcontent,keywords);
-			             var srcIndex = 0;
+			             var searchResult = $.inArray(inputcontent,keywords);			             
 			             $('video.movie').animate({
 									        right:'0px',
 									        top:'0px',
@@ -72,6 +71,12 @@ $(function(){
 			             
 				 });
 				 
+				//搜索按enter键触发点击事件
+				$("body").keyup(function () {  
+		                if (event.which == 13){  
+		                    $('#search').trigger("click");  
+		                }  
+                });  
 				 //Q-A功能
 				var btn=$("a.btn");
 				//var movie=$("video.movie"); 
@@ -108,11 +113,11 @@ $(function(){
 		    //   You can pass a function, a function name (as a string), or write your function as part of the commands object.
 		    var commands = {
 		    	
-		      'trident':  function(){showVideo(0)},
-		      'array':  function(){showVideo(1)},
-			  'side':  function(){showVideo(2)}
-			  'wow':  function(){showVideo(3)},
-			  'anpro':  function(){showVideo(4)} 
+		      'trident':  function(){console.log(1)},
+		      //'array':  function(){showVideo(1)},
+			 // 'side':  function(){showVideo(2)}
+			 //'wow':  function(){showVideo(3)},
+			 // 'anpro':  function(){showVideo(4)} 
 			            
 		        
 		    };
