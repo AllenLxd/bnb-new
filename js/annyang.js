@@ -7,7 +7,7 @@
   "use strict";
   if (typeof define === 'function' && define.amd) { // AMD + global
     define([], function () {
-      return (root.annyang = factory(root));
+      return (root.annyang = factory(root));0
     });
   } else if (typeof module === 'object' && module.exports) { // CommonJS
     module.exports = factory(root);

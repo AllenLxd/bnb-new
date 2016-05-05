@@ -102,7 +102,7 @@ $(function(){
 				})
 				
 				
-				 if (annyang) {		  
+			if (annyang) {		  
 		    // define the functions our commands will run.			
 		 
 		    
@@ -114,10 +114,10 @@ $(function(){
 		    var commands = {
 		    	
 		      'trident':  function(){console.log(1)},
-		      //'array':  function(){showVideo(1)},
-			 // 'side':  function(){showVideo(2)}
-			 //'wow':  function(){showVideo(3)},
-			 // 'anpro':  function(){showVideo(4)} 
+		      'array':  function(){showVideo(1)},
+			  'side':  function(){showVideo(2)},
+			  'wow':  function(){showVideo(3)},
+			  'anpro':  function(){showVideo(4)} 
 			            
 		        
 		    };
@@ -134,7 +134,17 @@ $(function(){
 		    annyang.setLanguage('en');
 		
 		    // Start listening. You can call this here, or attach this call to an event, button, etc.
-		    annyang.start();
+		    $('button.start').click(function(){
+		    	    annyang.start();
+		    	    $('p.voice-start').html('Please speak something to see the video');
+		    });
+		     $('button.abort').click(function(){
+		    	    annyang.abort();
+		    	    $('p.voice-start').html('Now the voice system is closed');
+		    });
+		    
+		    
+		    
 		    
 		  } else {
 		    $(document).ready(function() {
