@@ -15,14 +15,14 @@
 	width:350px;
 	float:left;
 }
+
+
 /**top part结束**/
 
-.product-img{
-	border:1px solid #c79c60;	
-}
-
-/**slider-part开始**/
 .slider-part{
+	height:700px;
+	width:75%;
+	float:left;
 	position:relative;
 }
 .slider-show{
@@ -30,9 +30,19 @@
 	left:0px;
 	top:0px;
 	display:none;
-	margin-left:20px;
 }
-
+.show-active{
+	display:block;
+}
+/**price-part开始**/
+.product-img{
+	border:1px solid #c79c60;	
+	margin-right:60px;
+}
+input{
+	width:60px;
+	text-align:center;
+}
 .price{
 	width:150px;
 	font-size:40px;
@@ -41,6 +51,7 @@
 .quantity span{
 	font-size:18px;
 }
+
 .space{
 	margin-top:30px;
 }
@@ -50,13 +61,15 @@
 .btn-space{
 	margin-right:20px;
 }
-/**slider-part结束**/
+/**price-part结束**/
 
 /**btn-part开始**/
 .btn-control{
 	position:relative;
 	top:30px;
-	left:30px;
+	left:50px;
+	width:25%;
+	float:left;
 }
 
 .btn-parameter{
