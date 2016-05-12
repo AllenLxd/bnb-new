@@ -1,41 +1,43 @@
 $(function(){
      	   
-			   //search 功能
+			   //搜索关键字
 			   var keywords = [
-                   'trident','trident sf','trident df','G2G trident',
-                   'array','array SF','array DF','G2G array',
-                   'side','G2G side','wow','WOW','anpro','ANPRO','Anpro'
-                  ]
+			                   'trident','trident sf','trident df','G2G trident',
+			                   'array','array SF','array DF','G2G array',
+			                   'side','G2G side','wow','WOW','anpro','ANPRO','Anpro'
+                              ]
+			   //视频url
 			   var videoSrc = ['Q1.mp4','Q2.mp4','Q3.mp4','Q4.mp4','Q5.mp4'];
 			   
+			   //视频播放完毕自动隐藏
 			   $('video.movie').bind('ended',function(){
 								    		 $(this).animate({
-												        right:'0px',
-												        top:'0px',
-												        width:'20px',
-												        height:'10px',									   
-													}, 1000).hide(100);
-												
-										});
+														        right:'0px',
+														        top:'0px',
+														        width:'20px',
+														        height:'10px',									   
+											}, 1000).hide(100);
+				});
+										
+				//视频自动出现并播放函数						
 				var showVideo = function(num){
 		   	
-		    	
-		           $('video.movie').animate({
-						        right:'0px',
-						        top:'0px',
-						        width:'20px',
-						        height:'10px'
-					 }, 10).hide();
-					 
-					 $('video.movie').attr({'src':videoSrc[num]}).show().animate({
-												        right:'400px',
-												        top:'200px',
-												        width:'615px',
-												        height:'350px'
-												}, 1700);
+				           $('video.movie').animate({
+								        right:'0px',
+								        top:'0px',
+								        width:'20px',
+								        height:'10px'
+							 }, 10).hide();
+							 
+							 $('video.movie').attr({'src':videoSrc[num]}).show().animate({
+														        right:'400px',
+														        top:'200px',
+														        width:'615px',
+														        height:'350px'
+														}, 1700);
 					  
-		 }
-			   
+		        }
+			    
 				 $('#search').click(function(){
 				 	    
 				 	     var inputcontent = $('#searchText').val();
@@ -69,7 +71,7 @@ $(function(){
 			             	      showVideo(4);
 			             }
 			             
-				 });
+				});
 				 
 				//搜索按enter键触发点击事件
 				$("body").keyup(function () {  
@@ -78,28 +80,27 @@ $(function(){
 		                }  
                 });  
 				 //Q-A功能
-				var btn=$("a.btn");
-				//var movie=$("video.movie"); 
-				//视频播放完毕自动隐藏
-					    
+				var btn=$("a.btn");    
 				btn.each(function(index){
-					var moveIndex = index;
-					$(this).click(function(){
-						    $('video.movie').animate({
-									        right:'0px',
-									        top:'0px',
-									        width:'20px',
-									        height:'10px'
-										}, 10).hide();
-						    
-						    $('video.movie').attr({'src':videoSrc[moveIndex]}).show().animate({
-															        right:'400px',
-															        top:'200px',
-															        width:'615px',
-															        height:'350px'
-															}, 1700);
-					});
-				})
+						var moveIndex = index;
+						$(this).click(function(){
+							    $('video.movie').animate({
+													        right:'0px',
+													        top:'0px',
+													        width:'20px',
+													        height:'10px'
+														}, 10).hide();
+							    
+							    $('video.movie').attr({'src':videoSrc[moveIndex]})
+							                    .show()
+							                    .animate({
+													        right:'400px',
+													        top:'200px',
+													        width:'615px',
+													        height:'350px'
+													}, 1700);
+						         });
+				  })
 				
 				
 			if (annyang) {		  
